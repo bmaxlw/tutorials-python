@@ -1,31 +1,6 @@
 import math
 
 
-# [12.01.21]: takes as input any list with duplicates
-# and returns a sorted list without duplicates
-def remove_all_duplicates_from_list(self, input_list):
-    list(input_list)
-    output = []
-    duplicated = []
-    for i in input_list:
-        if list(input_list).count(i) > 1:
-            duplicated.append(i)
-            list(input_list).remove(i)
-        else:
-            output.append(i)
-            pass
-    for j in duplicated:
-        if duplicated.count(j) > 1:
-            duplicated.remove(j)
-    for x in duplicated:
-        output.append(x)
-    for h in output:
-        if output.count(h) > 1:
-            output.remove(h)
-    output.sort()
-    return output
-
-
 # [12.01.21]: Takes a number of prices and returns their total
 def get_total(self, *prices):
     total = 0
