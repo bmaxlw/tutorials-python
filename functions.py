@@ -1,14 +1,6 @@
 import math
 
 
-# [12.01.21]: Takes a number of prices and returns their total
-def get_total(self, *prices):
-    total = 0
-    for price in prices:
-        total += price
-    return total
-
-
 # [22.01.21]: Takes number and power it should
 # be raised to. Returns the powered value.
 def power(value, to_power):
@@ -49,3 +41,11 @@ def get_evens_odds(start, stop):
 # and returns a sorted list without duplicates
 def remove_duplicates(input_list):
     return list(set(input_list))
+
+
+# [22.01.21]: Takes a number of prices and returns their total
+def get_total(self, *prices):
+    total = 0
+    for price in prices:
+        total += price
+    return total
