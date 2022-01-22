@@ -51,6 +51,11 @@ def get_total(self, *prices):
     return total
 
 
+# [22.01.21]: Takes *args => True if two equal
+def check_equal(*args):
+    return args[0] == args[1]
+
+
 # [22.01.21]: Takes two lists/sets/tuples, compares them
 # and returns two lists with elements:
 # 1) the <a> has, <doesn't>;
@@ -58,3 +63,13 @@ def get_total(self, *prices):
 def check_diff_inter(a, b):
     return f'Different: {list(set(a).difference(b))}\n' \
            f'Common:    {list(set(a).intersection(b))}'
+
+
+# [22.01.21]: Simple constructor + function sample
+class Person:
+    def __init__(self, first_name, last_name):
+        self.first_name = first_name
+        self.last_name = last_name
+
+    def show_credentials(self):
+        return f'{self.first_name} {self.last_name}'
