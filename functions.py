@@ -49,3 +49,30 @@ def get_total(self, *prices):
     for price in prices:
         total += price
     return total
+
+
+# [22.01.21]: Takes two lists/sets/tuples, compares them
+# and returns a list with elements the <a> has, <doesn't>
+def check_diff(a, b):
+    return list(set(a).difference(b))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
