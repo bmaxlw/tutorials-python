@@ -52,27 +52,9 @@ def get_total(self, *prices):
 
 
 # [22.01.21]: Takes two lists/sets/tuples, compares them
-# and returns a list with elements the <a> has, <doesn't>
-def check_diff(a, b):
-    return list(set(a).difference(b))
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# and returns two lists with elements:
+# 1) the <a> has, <doesn't>;
+# 2) both <a> and <b> have in common;
+def check_diff_inter(a, b):
+    return f'Different: {list(set(a).difference(b))}\n' \
+           f'Common:    {list(set(a).intersection(b))}'
