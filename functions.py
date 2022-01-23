@@ -92,10 +92,10 @@ def get_random_password(string_length):
     lower_cases = 'abcdefghigklmnopqrstuvwxyz'
     upper_cases = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     digit_signs = '1234567890!&?*$#'
-    while len(string) != string_length:
-        string += lower_cases[random.randint(0, len(lower_cases)-1)] + \
-                  upper_cases[random.randint(0, len(upper_cases)-1)] + \
-                  digit_signs[random.randint(0, len(digit_signs)-1)]
+    while len(string) <= string_length:
+        string += random.choice(lower_cases) + \
+                  random.choice(upper_cases) + \
+                  random.choice(digit_signs)
     return string
 
 
