@@ -88,15 +88,18 @@ def guess(x, y, number):
 
 # [23.01.22]: Return a random password with lower/upper case letters and digits
 def get_random_password(string_length):
-    string = ''
-    lower_cases = 'abcdefghigklmnopqrstuvwxyz'
-    upper_cases = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
-    digit_signs = '1234567890!&?*$#'
-    while len(string) <= string_length:
-        string += random.choice(lower_cases) + \
-                  random.choice(upper_cases) + \
-                  random.choice(digit_signs)
-    return string
+    try:
+        string = ''
+        lower_cases = 'abcdefghigklmnopqrstuvwxyz'
+        upper_cases = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+        digit_signs = '1234567890!&?*$#'
+        while len(string) <= string_length:
+            string += random.choice(lower_cases) + \
+                      random.choice(upper_cases) + \
+                      random.choice(digit_signs)
+        return string
+    except TypeError:
+        return "Please, enter integer value as <string_length> only!"
 
 
 # [22.01.22]: Simple constructor + function sample
