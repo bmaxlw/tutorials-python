@@ -76,17 +76,17 @@ def check_diff_inter(a, b):
            f'Common:    {list(set(a).intersection(b))}'
 
 
-# [23.01.22]: Convert input integer to binary
+# [23.01.22]: Converts input integer to binary
 def to_binary(number):
     return "{:b}".format(number)
 
 
-# [23.01.22]: Return True if number == randint in range(x, y)
+# [23.01.22]: Returns True if number == randint in range(x, y)
 def guess(x, y, number):
     return number == random.randint(x, y)
 
 
-# [23.01.22]: Return a random password with lower/upper case letters and digits
+# [23.01.22]: Returns a random password with lower/upper case letters and digits
 def get_random_password(string_length):
     try:
         string = ''
@@ -100,6 +100,12 @@ def get_random_password(string_length):
         return string
     except TypeError:
         return "Please, enter integer value as <string_length> only!"
+
+
+# [23.01.22]: Takes a list of names, returns three random "winners"
+def get_three_random_winners(names):
+    random.shuffle(names)
+    return f'First place: {names[0]}\nSecond place: {names[1]}\nThird place: {names[2]}'
 
 
 # [22.01.22]: Simple constructor + function sample
