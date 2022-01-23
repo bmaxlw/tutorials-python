@@ -1,5 +1,7 @@
 import math
 import random
+import os
+from datetime import datetime as dt
 
 
 # [22.01.22]: Takes number and power it should
@@ -106,6 +108,31 @@ def get_random_password(string_length):
 def get_three_random_winners(names):
     random.shuffle(names)
     return f'First place: {names[0]}\nSecond place: {names[1]}\nThird place: {names[2]}'
+
+
+# [23.01.22]: Takes path and defines whether it leads to a file or directory
+# or to None
+def check_path(path):
+    if os.path.exists(path) and os.path.isfile(path):
+        return 'isFile'
+    elif os.path.exists(path) and os.path.isdir(path):
+        return 'isDirectory'
+    else:
+        return 'notExists'
+
+
+# [23.01.22]: Takes path => creates txt => populates it with 10
+# 20-digit length passwords from <get_random_password> function
+def txt_go_pass(path):
+    u_idx = str(dt.now())[0:16].replace(' ', '_').replace('-', '_').replace(':', '_')
+    u_path = f"{path}" \
+             f"{u_idx}.txt"
+    counter = 0
+    with open(u_path, 'a'):
+        with open(u_path, 'w') as file:
+            while counter < 10:
+                file.write(f'{get_random_password(20)}\n')
+                counter += 1
 
 
 # [22.01.22]: Simple constructor + function sample
