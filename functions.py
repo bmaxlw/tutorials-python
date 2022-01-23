@@ -1,4 +1,5 @@
 import math
+import random
 
 
 # [22.01.22]: Takes number and power it should
@@ -75,6 +76,29 @@ def check_diff_inter(a, b):
            f'Common:    {list(set(a).intersection(b))}'
 
 
+# [23.01.22]: Convert input integer to binary
+def to_binary(number):
+    return "{:b}".format(number)
+
+
+# [23.01.22]: Return True if number == randint in range(x, y)
+def guess(x, y, number):
+    return number == random.randint(x, y)
+
+
+# [23.01.22]: Return a random password with lower/upper case letters and digits
+def get_random_password(string_length):
+    string = ''
+    lower_cases = 'abcdefghigklmnopqrstuvwxyz'
+    upper_cases = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    digit_signs = '1234567890!&?*$#'
+    while len(string) != string_length:
+        string += lower_cases[random.randint(0, len(lower_cases)-1)] + \
+                  upper_cases[random.randint(0, len(upper_cases)-1)] + \
+                  digit_signs[random.randint(0, len(digit_signs)-1)]
+    return string
+
+
 # [22.01.22]: Simple constructor + function sample
 class Person:
     def __init__(self, first_name, last_name):
@@ -83,6 +107,3 @@ class Person:
 
     def show_credentials(self):
         return f'{self.first_name} {self.last_name}'
-
-
-# [23.01.22]:
