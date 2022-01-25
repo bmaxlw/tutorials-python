@@ -8,6 +8,11 @@ import os
 import shutil as sh
 
 
+f.feed_specified_files(('one.txt', 'two.txt', 'three.txt'), 'C:/Users/bmaxl/Desktop/dir',
+                       'C:/Users/bmaxl/Desktop/dir/01')
+
+
+
 
 
 

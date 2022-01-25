@@ -159,7 +159,7 @@ def move_specified_files(file_name_pattern, src_dir, tgt_dir):
             with open(f'{src_dir}/log.txt', 'a') as log_file:
                 log_file.write(f'\n************************************************'
                                f'\n{count_files} file(s) uploaded: '
-                               f'\nDate:    {dt.datetime.now()}'
+                               f'\nDate:    {dt.now()}'
                                f'\nFrom:    {src_dir}'
                                f'\nTo:      {tgt_dir}'
                                f'\nPattern: {file_name_pattern}'
@@ -168,6 +168,13 @@ def move_specified_files(file_name_pattern, src_dir, tgt_dir):
                 break
     except FileNotFoundError:
         pass
+
+
+# [25.01.22]: Takes a tuple of file patterns + source and target paths and executes the
+#              move_specified_files() function, iterating through the tuple of patterns
+def feed_specified_files(iteration_tuple, src_dir, tgt_dir):
+    for file_pattern in iteration_tuple:
+        move_specified_files(file_pattern, src_dir, tgt_dir)
 
 
 # [22.01.22]: Simple constructor + function sample
