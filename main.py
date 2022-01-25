@@ -8,7 +8,6 @@ import os
 import shutil as sh
 
 
-f.move_specified_files('february.txt', 'C:/Users/bmaxl/Desktop/dir', 'C:/Users/bmaxl/Desktop/dir/01')
 
 
 

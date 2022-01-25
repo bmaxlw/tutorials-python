@@ -136,9 +136,11 @@ def txt_go_pass(path):
                 counter += 1
 
 
-# [23.01.22]: Takes:
-#             > a tuple <file_names> (Example: file_names = ('jan.txt', 'feb.txt', 'mar.txt'))
-#             > a variable <dir_path> (Example: dir_path = 'C:/Users/user/Desktop/dir'
+# [24.01.22]: Takes:
+#             > file_name_pattern => e.g.: '.txt'
+#             > src_dir           => e.g.: 'C:/Users/user/Desktop/src_dir'
+#             > tgt_dir           => e.g.: 'C:/Users/user/Desktop/tgt_dir'
+#             Moves files with stated pattern from src_dir to tgt_dir and create log file to track changes
 def move_specified_files(file_name_pattern, src_dir, tgt_dir):
     count_files = 0
     try:
@@ -155,6 +157,7 @@ def move_specified_files(file_name_pattern, src_dir, tgt_dir):
                 input('Done...')
     except FileNotFoundError:
         pass
+
 
 # [22.01.22]: Simple constructor + function sample
 class Person:
