@@ -7,7 +7,7 @@ import random as rnd
 import os
 import shutil as sh
 
-f.Customer('Maksym', 'Bondaruk', 'mbondaruk@gmail.com', '555888999').post_customer()
+
 
 
 
