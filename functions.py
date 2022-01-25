@@ -178,32 +178,78 @@ def feed_specified_files(iteration_tuple, src_dir, tgt_dir):
         move_specified_files(file_pattern, src_dir, tgt_dir)
 
 
-def setup_sql_connection(server_name, database_name):
+# [25.01.22]: Takes <server_name, database_name, service, trusted> to set up the SQL Server connection
+def setup_sql_connection(server_name, database_name,
+                         service='SQL Server', trusted='yes'):
     try:
-        conn = db.connect('Driver={SQL Server};'
+        conn = db.connect(f'Driver={service};'
                           f'Server={server_name};'
                           f'Database={database_name};'
-                          'Trusted_Connection=yes;')
+                          f'Trusted_Connection={trusted};')
         print(f'Connected to {database_name}!')
         return conn
-    except:
+    except:  # simplified exception handling
         print('Connection failed!')
 
 
-# [22.01.22]: Simple constructor + function sample
+# [25.01.22]: Simple console CRUD simulation
 class Customer:
-    def __init__(self, customer_id, first_name, last_name, phone_number, email_address):
+    def __init__(self, customer_id=None, first_name=None, last_name=None, phone_number=None, email_address=None):
         self.customer_id = customer_id
         self.first_name = first_name
         self.last_name = last_name
         self.phone_number = phone_number
         self.email_address = email_address
 
-    def post_customer(self, server_name, database_name):
-        conn = setup_sql_connection(f'{server_name}', f'{database_name}')
+    def setup_sql_connection_to_customers(self):
+        return setup_sql_connection('DESKTOP-VU19ML5', 'pypy')
+
+    # add a new customer to the database
+    def create_customer(self):
+        conn = Customer.setup_sql_connection_to_customers(self)
         conn.execute("INSERT INTO Customers"
                      "(FirstName, LastName, PhoneNumber, EmailAddress) "
                      f"VALUES('{self.first_name}', '{self.last_name}', "
                      f"'{self.email_address}', '{self.phone_number}')")
+        conn.commit()
+        conn.close()
+
+    # get a certain customer from the database
+    def read_customer(self):
+        conn = Customer.setup_sql_connection_to_customers(self)
+        cursor = conn.cursor()
+        cursor.execute(f"SELECT * FROM Customers WHERE ID = {self.customer_id}")
+        for item in cursor:
+            print(item)
+
+    # get all customers from the database
+    def read_customers(self):
+        conn = Customer.setup_sql_connection_to_customers(self)
+        cursor = conn.cursor()
+        cursor.execute(f"SELECT * FROM Customers")
+        for items in cursor.fetchall():
+            print(items)
+
+    # update a certain customer in the database
+    def update_customer(self):
+        conn = Customer.setup_sql_connection_to_customers(self)
+        conn.execute("UPDATE Customers"
+                     f"SET FirstName = '{self.first_name}', LastName = '{self.last_name}',"
+                     f"PhoneNumber = '{self.phone_number}', EmailAddress = '{self.email_address}'"
+                     f"WHERE ID = {self.customer_id}")
+        conn.commit()
+        conn.close()
+
+    # delete a certain customer from the database
+    def delete_customer(self):
+        conn = Customer.setup_sql_connection_to_customers(self)
+        conn.execute(f"DELETE FROM Customers WHERE ID = {self.customer_id}")
+        conn.commit()
+        conn.close()
+
+    # delete all customers from the database (table)
+    def delete_customers(self):
+        conn = Customer.setup_sql_connection_to_customers(self)
+        conn.execute(f"TRUNCATE TABLE Customers")
         conn.commit()
         conn.close()
