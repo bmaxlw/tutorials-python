@@ -136,7 +136,7 @@ def txt_go_pass(path):
                 counter += 1
 
 
-# [24.01.22]: Takes:
+# [25.01.22]: Takes:
 #             > file_name_pattern => e.g.: '.txt'
 #             > src_dir           => e.g.: 'C:/Users/user/Desktop/src_dir'
 #             > tgt_dir           => e.g.: 'C:/Users/user/Desktop/tgt_dir'
