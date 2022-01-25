@@ -2,6 +2,7 @@ import math
 import random
 import os
 from datetime import datetime as dt
+import pyodbc as db
 
 
 # [22.01.22]: Takes number and power it should
@@ -177,11 +178,32 @@ def feed_specified_files(iteration_tuple, src_dir, tgt_dir):
         move_specified_files(file_pattern, src_dir, tgt_dir)
 
 
+def setup_sql_connection(server_name, database_name):
+    try:
+        conn = db.connect('Driver={SQL Server};'
+                          f'Server={server_name};'
+                          f'Database={database_name};'
+                          'Trusted_Connection=yes;')
+        print(f'Connected to {database_name}!')
+        return conn
+    except:
+        print('Connection failed!')
+
+
 # [22.01.22]: Simple constructor + function sample
-class Person:
-    def __init__(self, first_name, last_name):
+class Customer:
+    def __init__(self, customer_id, first_name, last_name, phone_number, email_address):
+        self.customer_id = customer_id
         self.first_name = first_name
         self.last_name = last_name
+        self.phone_number = phone_number
+        self.email_address = email_address
 
-    def show_credentials(self):
-        return f'{self.first_name} {self.last_name}'
+    def post_customer(self, server_name, database_name):
+        conn = setup_sql_connection(f'{server_name}', f'{database_name}')
+        conn.execute("INSERT INTO Customers"
+                     "(FirstName, LastName, PhoneNumber, EmailAddress) "
+                     f"VALUES('{self.first_name}', '{self.last_name}', "
+                     f"'{self.email_address}', '{self.phone_number}')")
+        conn.commit()
+        conn.close()

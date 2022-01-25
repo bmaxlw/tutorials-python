@@ -7,9 +7,8 @@ import random as rnd
 import os
 import shutil as sh
 
+f.Customer('Maksym', 'Bondaruk', 'mbondaruk@gmail.com', '555888999').post_customer()
 
-f.feed_specified_files(('one.txt', 'two.txt', 'three.txt'), 'C:/Users/bmaxl/Desktop/dir',
-                       'C:/Users/bmaxl/Desktop/dir/01')
 
 
 
