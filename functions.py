@@ -5,13 +5,13 @@ from datetime import datetime as dt
 
 
 # [22.01.22]: Takes number and power it should
-# be raised to. Returns the powered value.
+#             be raised to. Returns the powered value.
 def power(value, to_power):
     return math.pow(value, to_power)
 
 
 # [22.01.22]: Takes a string with an email
-# and returns domain name of given email
+#             and returns domain name of given email
 def get_domain(string):
     x = str(string).find('@')
     return string[x:]
@@ -25,7 +25,7 @@ def get_params():
 
 
 # [22.01.22]: Takes an input of two integers (start/stop) and returns
-# two lists with evens and odds in range of those two integers
+#             two lists with evens and odds in range of those two integers
 def get_evens_odds(start, stop):
     evens_list = []
     odds_list = []
@@ -41,7 +41,7 @@ def get_evens_odds(start, stop):
 
 
 # [22.01.22]: Takes as input any list with duplicates
-# and returns a sorted list without duplicates
+#             and returns a sorted list without duplicates
 def remove_duplicates(input_list):
     return list(set(input_list))
 
@@ -60,7 +60,8 @@ def check_equal(*args):
 
 
 # [23.01.22]: Takes **kwargs => incremented **kwargs pairs
-# Example: increment_rates(usd=27.5, eur=30.5, gbp=32.5, increment=1.25)
+#             Example: increment_rates(usd=27.5, eur=30.5,
+#             gbp=32.5, increment=1.25)
 def increment_rates(**rates):
     for key, value in rates.items():
         if key == 'increment':
@@ -70,9 +71,9 @@ def increment_rates(**rates):
 
 
 # [22.01.22]: Takes two lists/sets/tuples, compares them
-# and returns two lists with elements:
-# 1) the <a> has, <doesn't>;
-# 2) both <a> and <b> have in common;
+#             and returns two lists with elements:
+#             1) the <a> has, <doesn't>;
+#             2) both <a> and <b> have in common;
 def check_diff_inter(a, b):
     return f'Different: {list(set(a).difference(b))}\n' \
            f'Common:    {list(set(a).intersection(b))}'
@@ -111,7 +112,7 @@ def get_three_random_winners(names):
 
 
 # [23.01.22]: Takes path and defines whether it leads to a file or directory
-# or to None
+#             or to None
 def check_path(path):
     if os.path.exists(path) and os.path.isfile(path):
         return 'isFile'
@@ -122,7 +123,7 @@ def check_path(path):
 
 
 # [23.01.22]: Takes path => creates txt => populates it with 10
-# 20-digit length passwords from <get_random_password> function
+#             20-digit length passwords from <get_random_password> function
 def txt_go_pass(path):
     u_idx = str(dt.now())[0:16].replace(' ', '_').replace('-', '_').replace(':', '_')
     u_path = f"{path}" \
@@ -134,6 +135,26 @@ def txt_go_pass(path):
                 file.write(f'{get_random_password(20)}\n')
                 counter += 1
 
+
+# [23.01.22]: Takes:
+#             > a tuple <file_names> (Example: file_names = ('jan.txt', 'feb.txt', 'mar.txt'))
+#             > a variable <dir_path> (Example: dir_path = 'C:/Users/user/Desktop/dir'
+def move_specified_files(file_name_pattern, src_dir, tgt_dir):
+    count_files = 0
+    try:
+        while True:
+            for roots, folders, files in os.walk(src_dir):
+                for file in files:
+                    if file.endswith(file_name_pattern):
+                        os.replace(f'{src_dir}/{file}', f'{tgt_dir}/{file}')
+                        count_files += 1
+                    else:
+                        pass
+                with open(f'{src_dir}/log.txt', 'a') as log_file:
+                    log_file.write(f'\n{count_files} files uploaded: {dt.now()}')
+                input('Done...')
+    except FileNotFoundError:
+        pass
 
 # [22.01.22]: Simple constructor + function sample
 class Person:
