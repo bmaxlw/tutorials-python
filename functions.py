@@ -193,6 +193,7 @@ def setup_sql_connection(server_name, database_name,
 
 
 # [25.01.22]: Simple console CRUD simulation
+# (!) DELETE REDUNDANCY OF CONNECTIONS, VIOLATING DRY
 class Customer:
     def __init__(self, customer_id=None, first_name=None, last_name=None, phone_number=None, email_address=None):
         self.customer_id = customer_id
