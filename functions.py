@@ -254,3 +254,32 @@ class Customer:
         conn.execute(f"TRUNCATE TABLE Customers")
         conn.commit()
         conn.close()
+
+
+# [27.01.2022] Multilevel inheritance
+class GrandFather:
+    def __init__(self, full_name):
+        self.full_name = full_name
+
+    def set_username(self):
+        return str(self.full_name[0] +
+                   self.full_name[self.full_name.index(' '):])\
+                   .lower().replace(' ', '.')
+
+
+class Father(GrandFather):
+    def __init__(self, full_name, age):
+        super().__init__(full_name)  # full_name inherited from GrandFather
+        self.age = age  # age added as instance variable
+
+
+class Son(Father):
+    def __init__(self, full_name, age, height):
+        super().__init__(full_name, age)  # full_name and age inherited from Father
+        self.height = height  # height added as instance variable
+
+
+class GrandSon(Son):
+    def __init__(self, full_name, age, height, weight):
+        super().__init__(full_name, age, height)  # full_name, age and height inherited from Son
+        self.weight = weight  # weight added as instance variable
