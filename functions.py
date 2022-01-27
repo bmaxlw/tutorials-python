@@ -283,3 +283,20 @@ class GrandSon(Son):
     def __init__(self, full_name, age, height, weight):
         super().__init__(full_name, age, height)  # full_name, age and height inherited from Son
         self.weight = weight  # weight added as instance variable
+
+
+# [27.01.2022] Multiple inheritance with constructor derivation
+class Mother:
+    def __init__(self, eye_color):
+        self.eye_color = eye_color
+
+
+class Dad:
+    def __init__(self, hair_color):
+        self.hair_color = hair_color
+
+
+class Child(Mother, Dad):
+    def __init__(self, eye_color, hair_color):
+        super(Mother, self).__init__(eye_color)
+        super(Dad, self).__init__(hair_color)
