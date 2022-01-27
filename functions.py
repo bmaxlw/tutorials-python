@@ -320,6 +320,8 @@ class Dog(Animal):
 
 
 # [27.01.2022] Methods chaining
+# (!) self has to be returned to chain functions since it returns the object itself and thus
+#     the next method can be chained to the previous one
 class Driver:
     def __init__(self, name):
         self.name = name
