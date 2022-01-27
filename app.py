@@ -1,14 +1,18 @@
-class Mother:
-    def __init__(self, eye_color):
-        self.eye_color = eye_color
+class Driver:
+    def __init__(self, name):
+        self.name = name
+
+    def turn_on_car(self):
+        print(f'{self.name} turns on the car!')
+        return self
+
+    def drive_the_car(self):
+        print(f'{self.name} drives a car!')
+        return self
+
+    def stop_the_car(self):
+        print(f'{self.name} stops the car!')
+        return self
 
 
-class Father:
-    def __init__(self, hair_color):
-        self.hair_color = hair_color
-
-
-class Child(Mother, Father):
-    def __init__(self, eye_color, hair_color):
-        super(Mother, self).__init__(eye_color)
-        super(Father, self).__init__(hair_color)
+dr = Driver('Max').turn_on_car().drive_the_car().stop_the_car()

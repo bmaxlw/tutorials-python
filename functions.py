@@ -300,3 +300,38 @@ class Child(Mother, Dad):
     def __init__(self, eye_color, hair_color):
         super(Mother, self).__init__(eye_color)
         super(Dad, self).__init__(hair_color)
+
+
+# [27.01.2022] Overriding
+class Animal:
+    def __init__(self, what):
+        self.what = what
+
+    def say(self):
+        return f'Animal is saying: "{self.what}"'
+
+
+class Dog(Animal):
+    def __init__(self, what):
+        super().__init__(what)
+
+    def say(self):
+        return f'Dog is barking: "{self.what}"'
+
+
+# [27.01.2022] Methods chaining
+class Driver:
+    def __init__(self, name):
+        self.name = name
+
+    def turn_on_car(self):
+        print(f'{self.name} turns on the car!')
+        return self  # if void is stated 'None' is returned and chaining fails
+
+    def drive_the_car(self):
+        print(f'{self.name} drives a car!')
+        return self  # if return str/float/int, etc => function cannot be chained
+
+    def stop_the_car(self):
+        print(f'{self.name} stops the car!')
+        return self
