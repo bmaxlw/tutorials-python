@@ -286,6 +286,7 @@ class GrandSon(Son):
 
 
 # [27.01.2022] Multiple inheritance with constructor derivation
+# Sample 1
 class Mother:
     def __init__(self, eye_color):
         self.eye_color = eye_color
@@ -300,6 +301,55 @@ class Child(Mother, Dad):
     def __init__(self, eye_color, hair_color):
         super(Mother, self).__init__(eye_color)
         super(Dad, self).__init__(hair_color)
+
+
+class UserPattern:
+    def __init__(self, first_name, last_name, email, phone, location):
+        self.first_name = first_name
+        self.last_name = last_name
+        self.email = email
+        self.phone = phone
+        self.location = location
+
+
+# Sample 2
+class ManagementPattern():
+    def __init__(self, access_level):
+        self.access_level = access_level
+
+
+class Guest(UserPattern):
+    def __init__(self, first_name, last_name, email, phone, location):
+        super().__init__(first_name, last_name, email, phone, location)
+
+
+class User(UserPattern):
+    def __init__(self, first_name, last_name, email, phone, location):
+        super().__init__(first_name, last_name, email, phone, location)
+        self.username = ''
+        self.password = ''
+
+    def set_username(self):
+        self.username = str(f'{self.first_name.lower()}.{self.last_name.lower()}')
+        return self.username
+
+    def set_password(self):
+        self.password = str(f'{get_random_password(15)}')
+        return self.password
+
+    def set_corporate_email(self):
+        return str(f'{User.set_username(self)}@hsbc-{self.location}.com').lower()
+
+
+class Admin(UserPattern, ManagementPattern):
+    def __init__(self, first_name, last_name, email, phone, location, access_level):
+        super(UserPattern, self).__init__(first_name, last_name, email, phone, location)
+        super(ManagementPattern, self).__init__(access_level)
+        self.password = ''
+    
+    def set_password(self):
+        self.password = str(f'{get_random_password(25)}')
+        return self.password
 
 
 # [27.01.2022] Overriding
