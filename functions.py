@@ -3,6 +3,7 @@ import random
 import os
 from datetime import datetime as dt
 import pyodbc as db
+from abc import ABC, abstractmethod
 
 
 # [22.01.22]: Takes number and power it should
@@ -303,6 +304,7 @@ class Child(Mother, Dad):
         super(Dad, self).__init__(hair_color)
 
 
+# Sample 2
 class UserPattern:
     def __init__(self, first_name, last_name, email, phone, location):
         self.first_name = first_name
@@ -312,7 +314,6 @@ class UserPattern:
         self.location = location
 
 
-# Sample 2
 class ManagementPattern():
     def __init__(self, access_level):
         self.access_level = access_level
@@ -343,10 +344,10 @@ class User(UserPattern):
 
 class Admin(UserPattern, ManagementPattern):
     def __init__(self, first_name, last_name, email, phone, location, access_level):
-        super(UserPattern, self).__init__(first_name, last_name, email, phone, location)
-        super(ManagementPattern, self).__init__(access_level)
+        UserPattern.__init__(self, first_name, last_name, email, phone, location)
+        ManagementPattern.__init__(self, access_level)
         self.password = ''
-    
+
     def set_password(self):
         self.password = str(f'{get_random_password(25)}')
         return self.password
