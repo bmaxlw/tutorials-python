@@ -388,3 +388,38 @@ class Driver:
     def stop_the_car(self):
         print(f'{self.name} stops the car!')
         return self
+
+
+# [29.01.2022] Abstract class
+class User2(ABC):
+    @abstractmethod
+    def get_first_name(self):
+        pass
+
+    def get_last_name(self):
+        pass
+
+
+class Employee(User2):
+    def __init__(self, full_name):
+        self.full_name = full_name
+
+    def get_first_name(self):
+        idx = str(self.full_name).index(' ')
+        return self.full_name[0:idx]
+
+    def get_last_name(self):
+        idx = str(self.full_name).index(' ') + 1
+        return self.full_name[idx:]
+
+
+# [30.01.2022] Takes total (by default = 0) and sums up the provided prices
+# (!) Walrus used
+def get_total_prices(total=0):
+    while (price := input('> ')) != 'end':  # brackets with (price := input('> ')) are obligatory else: bool provided
+        total += float(price)
+    return round(total, 2)
+
+
+# [31.01.2022]: Lambda
+lmb = lambda x: True if x >= 18 else False
