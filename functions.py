@@ -473,3 +473,11 @@ def describe_data(dataset):
     return f'Min: {min(dataset)} ' \
            f'\nMax: {max(dataset)} ' \
            f'\nAvg: {round(x/len(dataset), 2)}'
+
+
+# [03.02.2022] Describe iterable
+def compare(*multiple):
+    if a is b:
+        return True
+    else:
+        return False

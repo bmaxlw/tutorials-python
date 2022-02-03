@@ -5,7 +5,3 @@ import functions as f
 
 
 
-
-
-
-
