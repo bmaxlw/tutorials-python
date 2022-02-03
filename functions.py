@@ -454,3 +454,22 @@ def increment_by(times):
             result_set.append(item * times)
         return result_set
     return get_data
+
+
+def get_prices(prices):  # takes an iterable of prices
+    def apply_rates(rate):
+        result_prices = list()
+        for item in prices:
+            result_prices.append(round(item * (1 + float(rate)), 2))  # applies rates to each price
+        return result_prices
+    return apply_rates
+
+
+# [03.02.2022] Describe iterable
+def describe_data(dataset):
+    x = float()
+    for i in dataset:
+        x += i
+    return f'Min: {min(dataset)} ' \
+           f'\nMax: {max(dataset)} ' \
+           f'\nAvg: {round(x/len(dataset), 2)}'
