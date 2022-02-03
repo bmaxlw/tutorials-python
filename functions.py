@@ -422,4 +422,35 @@ def get_total_prices(total=0):
 
 
 # [31.01.2022]: Lambda
-lmb = lambda x: True if x >= 18 else False
+lmbd = lambda x: True if x >= 18 else False
+
+
+# [03.02.2022] Higher order Functions
+# 1) Takes other function as argument
+class Employee:
+    def __init__(self):
+        self.__first_name = str()
+        self.__last_name = str()
+
+    def set_credentials(self, first_name, last_name):
+        self.__first_name = first_name
+        self.__last_name = last_name
+
+    def get_credentials(self):
+        return self.__first_name, self.__last_name
+
+    def create_user_account(self, get_credentials):  # takes a function as an argument
+        creds = get_credentials()
+        username = f'{creds[0][0:2]}{creds[1]}'.lower()
+        email = f'{creds[0]}.{creds[1]}@corporate.com'.lower()
+        return username, email  # returns a tuple
+
+
+# 2) Returns a function
+def increment_by(times):
+    def get_data(dataset):  # takes an iterable as an argument
+        result_set = list()
+        for item in dataset:
+            result_set.append(item * times)
+        return result_set
+    return get_data
