@@ -549,11 +549,12 @@ def get_factorial(number):
     return number
 
 
-# [05.02.2022] Takes
+# [05.02.2022]: takes <iterable> and <condition> as upper limit of True being fired
+# makes a list comprehension to those below <condition> as False
+# counts the ratio btn pos (True) and neg (False) in percentages
 def ratio_pos_neg(iterable, condition):
     out = [False if item < condition else True for item in iterable]
     pos = out.count(True)
     neg = out.count(False)
-    print(pos, neg)
     return f'{round(pos/len(out) * 100, 2)}% positive' \
            f'\n{round(neg/len(out) * 100, 2)}% negative'
