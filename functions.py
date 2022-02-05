@@ -4,6 +4,7 @@ import os
 from datetime import datetime as dt
 import pyodbc as db
 from abc import ABC, abstractmethod
+import functools as ft
 
 
 # [22.01.22]: Takes number and power it should
@@ -422,7 +423,9 @@ def get_total_prices(total=0):
 
 
 # [31.01.2022]: Lambda
-lmbd = lambda x: True if x >= 18 else False
+lambda_1 = lambda x: True if x >= 18 else False
+lambda_2 = lambda x, y: True if x == y else False
+lambda_3 = lambda x, y: True if x is y else False
 
 
 # [03.02.2022] Higher order Functions
@@ -476,8 +479,63 @@ def describe_data(dataset):
 
 
 # [03.02.2022] Describe iterable
-def compare(*multiple):
+def compare(a, b):
     if a is b:
         return True
     else:
         return False
+
+
+# [04.02.2022] Sort and return any iterable
+def sort_iterable(iterable, idx):
+    sorted_iterable = sorted(iterable, key=lambda itr: itr[idx])
+    return sorted_iterable
+
+
+# [04.02.2022] Takes [[]] as <data> with values and increment each value is not str by <rate>
+def increment_by(data, rate):
+    x = list()
+    for items in data:
+        for item in items:
+            if type(item) is not str:
+                item *= rate
+                x.append(item)
+            else:
+                continue
+    return x
+
+
+# [05.02.2022]
+# <map>, <sort>, <filter> examples
+#          name    age
+names = [['James', 20],
+         ['Amanda', 25],
+         ['Peter', 18],
+         ['Anna', 17]]
+
+
+def filter_map_sort(iterable):
+    iterable = list(filter(lambda x: x[1] > 18, iterable))  # filters records where age > 18
+    iterable = list(map(lambda y: (y[0], y[1] + 1), iterable))  # applies +1 to each age
+    iterable.sort(key=lambda z: z[1])  # sorts by age with lambda as key to it
+    # iterable = sorted(iterable, key=lambda z: z[1])  # 2nd variant of sorting
+    return iterable
+
+
+# [05.02.2022]
+# <reduce> example (functools)
+def cart_counter():
+    idx = 3
+    cart = list()
+    while x := float(input('> ')):
+        cart.append(x)
+        if len(cart) >= idx:
+            price = ft.reduce(lambda a, b: a + b, cart)
+            print(f'The price is {round(price, 2)} EUR')
+            qa = input('Proceed? Y/N: ').lower()
+            if qa == 'y':
+                idx += idx
+                continue
+            else:
+                print(f'{price} EUR is the final price of your cart!')
+                break
