@@ -523,7 +523,7 @@ def filter_map_sort(iterable):
 
 
 # [05.02.2022]
-# <reduce> example (functools)
+# <reduce> examples (functools)
 def cart_counter():
     idx = 3
     cart = list()
@@ -539,3 +539,14 @@ def cart_counter():
             else:
                 print(f'{price} EUR is the final price of your cart!')
                 break
+
+
+# [05.02.2022]
+# takes <number>, returns its factorial
+def get_factorial(number):
+    iterable = list()
+    while number > 0:
+        iterable.append(number)
+        number -= 1
+    number = ft.reduce(lambda a, b: a * b, iterable)
+    return number

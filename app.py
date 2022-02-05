@@ -7,8 +7,5 @@ import functools as ft
 #
 # print(result)
 
+print(f.get_factorial(20))
 
-
-
-
-cart2()
