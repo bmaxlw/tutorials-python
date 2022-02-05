@@ -1,11 +1,22 @@
 import functions as f
 import functools as ft
+import random as rnd
 
-# iterable = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+# dataset = (('James', 'Sarah', 'Bonnie', 'Chandler', 'Monica'),
+#            ('Math', 'Math', 'Math', 'Math', 'Math'),
+#            (49, 61, 49, 71, 90))
 #
-# result = ft.reduce(lambda x, y: x + y, iterable)
 #
-# print(result)
+# passed = [i for i in dataset[2] if i >= 50]
+# passed2 = ['Success' if x >= 50 else 'Failed' for x in dataset[2]]
+# print(passed2)
 
-print(f.get_factorial(20))
+
+
+
+
+
+
+# x = 1
+# print(5 if x > 1 else 4)
 

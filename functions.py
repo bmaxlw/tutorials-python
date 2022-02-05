@@ -160,13 +160,13 @@ def move_specified_files(file_name_pattern, src_dir, tgt_dir):
                     else:
                         pass
             with open(f'{src_dir}/log.txt', 'a') as log_file:
-                log_file.write(f'\n************************************************'
+                log_file.write(f'\n**********************************'
                                f'\n{count_files} file(s) uploaded: '
                                f'\nDate:    {dt.now()}'
                                f'\nFrom:    {src_dir}'
                                f'\nTo:      {tgt_dir}'
                                f'\nPattern: {file_name_pattern}'
-                               f'\n************************************************')
+                               f'\n**********************************')
                 input('Done...')
                 break
     except FileNotFoundError:
@@ -354,7 +354,7 @@ class Admin(UserPattern, ManagementPattern):
         return self.password
 
 
-# [27.01.2022] Overriding
+# [27.01.2022]: Overriding
 class Animal:
     def __init__(self, what):
         self.what = what
@@ -371,7 +371,7 @@ class Dog(Animal):
         return f'Dog is barking: "{self.what}"'
 
 
-# [27.01.2022] Methods chaining
+# [27.01.2022]: Methods chaining
 # (!) self has to be returned to chain functions since it returns the object itself and thus
 #     the next method can be chained to the previous one
 class Driver:
@@ -391,7 +391,7 @@ class Driver:
         return self
 
 
-# [29.01.2022] Abstract class
+# [29.01.2022]: Abstract class
 class User2(ABC):
     @abstractmethod
     def get_first_name(self):
@@ -414,7 +414,7 @@ class Employee(User2):
         return self.full_name[idx:]
 
 
-# [30.01.2022] Takes total (by default = 0) and sums up the provided prices
+# [30.01.2022]: Takes total (by default = 0) and sums up the provided prices
 # (!) Walrus used
 def get_total_prices(total=0):
     while (price := input('> ')) != 'end':  # brackets with (price := input('> ')) are obligatory else: bool provided
@@ -428,7 +428,7 @@ lambda_2 = lambda x, y: True if x == y else False
 lambda_3 = lambda x, y: True if x is y else False
 
 
-# [03.02.2022] Higher order Functions
+# [03.02.2022]: Higher order Functions
 # 1) Takes other function as argument
 class Employee:
     def __init__(self):
@@ -468,7 +468,7 @@ def get_prices(prices):  # takes an iterable of prices
     return apply_rates
 
 
-# [03.02.2022] Describe iterable
+# [03.02.2022]: Describe iterable
 def describe_data(dataset):
     x = float()
     for i in dataset:
@@ -478,7 +478,7 @@ def describe_data(dataset):
            f'\nAvg: {round(x/len(dataset), 2)}'
 
 
-# [03.02.2022] Describe iterable
+# [03.02.2022]: Describe iterable
 def compare(a, b):
     if a is b:
         return True
@@ -486,13 +486,13 @@ def compare(a, b):
         return False
 
 
-# [04.02.2022] Sort and return any iterable
+# [04.02.2022]: Sort and return any iterable
 def sort_iterable(iterable, idx):
     sorted_iterable = sorted(iterable, key=lambda itr: itr[idx])
     return sorted_iterable
 
 
-# [04.02.2022] Takes [[]] as <data> with values and increment each value is not str by <rate>
+# [04.02.2022]: Takes [[]] as <data> with values and increment each value is not str by <rate>
 def increment_by(data, rate):
     x = list()
     for items in data:
@@ -505,8 +505,7 @@ def increment_by(data, rate):
     return x
 
 
-# [05.02.2022]
-# <map>, <sort>, <filter> examples
+# [05.02.2022]: <map>, <sort>, <filter> examples
 #          name    age
 names = [['James', 20],
          ['Amanda', 25],
@@ -522,8 +521,7 @@ def filter_map_sort(iterable):
     return iterable
 
 
-# [05.02.2022]
-# <reduce> examples (functools)
+# [05.02.2022]: <reduce> examples (functools)
 def cart_counter():
     idx = 3
     cart = list()
@@ -541,8 +539,7 @@ def cart_counter():
                 break
 
 
-# [05.02.2022]
-# takes <number>, returns its factorial
+# [05.02.2022]: takes <number>, returns its factorial
 def get_factorial(number):
     iterable = list()
     while number > 0:
@@ -550,3 +547,13 @@ def get_factorial(number):
         number -= 1
     number = ft.reduce(lambda a, b: a * b, iterable)
     return number
+
+
+# [05.02.2022] Takes
+def ratio_pos_neg(iterable, condition):
+    out = [False if item < condition else True for item in iterable]
+    pos = out.count(True)
+    neg = out.count(False)
+    print(pos, neg)
+    return f'{round(pos/len(out) * 100, 2)}% positive' \
+           f'\n{round(neg/len(out) * 100, 2)}% negative'
