@@ -478,7 +478,7 @@ def describe_data(dataset):
            f'\nAvg: {round(x/len(dataset), 2)}'
 
 
-# [03.02.2022]: Describe iterable
+# [03.02.2022]: Checks if <a> IS <b>
 def compare(a, b):
     if a is b:
         return True
@@ -558,3 +558,35 @@ def ratio_pos_neg(iterable, condition):
     neg = out.count(False)
     return f'{round(pos/len(out) * 100, 2)}% positive' \
            f'\n{round(neg/len(out) * 100, 2)}% negative'
+
+
+# [06.02.2022]: Takes an iterable as an argument and returns two lists with odds and evens
+def sort_odd_even(iterable):
+    evens = [even if (even % 2 == 0) else None for even in iterable]
+    odds = [odd if (odd % 2 > 0) else None for odd in iterable]
+    for e in evens:
+        if e is None:
+            evens.remove(e)
+    for o in odds:
+        if o is None:
+            odds.remove(o)
+    return f'Evens: {evens}\n Odds: {odds}'
+
+
+# [08.02.2022]: Takes a dictionary with pattern {'key_name': float} and
+# returns a string with two dictionaries presenting floats above and below avg of input params
+# [Input sample]: rates = {'AAPL': 290.99, 'FB': 105.75, 'TSLA': 210.50, 'PTON': 221.99, 'AMD': 199.99, 'AMZN': 175.55}
+def comp_d(dictionary):
+    def get_avg():
+        tot = 0
+        for i in dictionary.values():
+            tot += i
+        return tot / len(dictionary)
+    avg = get_avg()
+    above_avg = {
+        key: value for key, value in dictionary.items() if value > avg
+    }
+    below_avg = {
+        key: value for key, value in dictionary.items() if value <= avg
+    }
+    return f'Average: {round(avg, 2)}\nAbove: {above_avg}\nBelow: {below_avg}'
