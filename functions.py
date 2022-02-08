@@ -549,7 +549,8 @@ def get_factorial(number):
     return number
 
 
-# [05.02.2022]: takes <iterable> and <condition> as upper limit of True being fired
+# [05.02.2022]: <list comprehension>
+# Takes <iterable> and <condition> as upper limit of True being fired
 # makes a list comprehension to those below <condition> as False
 # counts the ratio btn pos (True) and neg (False) in percentages
 def ratio_pos_neg(iterable, condition):
@@ -560,7 +561,7 @@ def ratio_pos_neg(iterable, condition):
            f'\n{round(neg/len(out) * 100, 2)}% negative'
 
 
-# [06.02.2022]: Takes an iterable as an argument and returns two lists with odds and evens
+# [06.02.2022]: <list comprehension> Takes an iterable as an argument and returns two lists with odds and evens
 def sort_odd_even(iterable):
     evens = [even if (even % 2 == 0) else None for even in iterable]
     odds = [odd if (odd % 2 > 0) else None for odd in iterable]
@@ -573,7 +574,7 @@ def sort_odd_even(iterable):
     return f'Evens: {evens}\n Odds: {odds}'
 
 
-# [08.02.2022]: Takes a dictionary with pattern {'key_name': float} and
+# [08.02.2022]: <dictionary comprehension> Takes a dictionary with pattern {'key_name': float} and
 # returns a string with two dictionaries presenting floats above and below avg of input params
 # [Input sample]: rates = {'AAPL': 290.99, 'FB': 105.75, 'TSLA': 210.50, 'PTON': 221.99, 'AMD': 199.99, 'AMZN': 175.55}
 def comp_d(dictionary):
