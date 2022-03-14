@@ -591,3 +591,22 @@ def comp_d(dictionary):
         key: value for key, value in dictionary.items() if value <= avg
     }
     return f'Average: {round(avg, 2)}\nAbove: {above_avg}\nBelow: {below_avg}'
+
+
+# [09.02.2022]: Takes two iterables and <return type>. Returns zipped collection of stated type
+def return_as(iter1, iter2, return_type='dict'):
+    try:
+        if return_type == 'dict':
+            return dict(zip(iter1, iter2))
+        elif return_type == 'tup':
+            return tuple(zip(iter1, iter2))
+        elif return_type == 'list':
+            return list(zip(iter1, iter2))
+        elif return_type == 'set':
+            return set(zip(iter1, iter2))
+        elif return_type == 'frozen':
+            return frozenset(zip(iter1, iter2))
+        else:
+            return zip(iter1, iter2)
+    except:
+        print('Unexpected error!')
