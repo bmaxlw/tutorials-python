@@ -610,3 +610,21 @@ def return_as(iter1, iter2, return_type='dict'):
             return zip(iter1, iter2)
     except:
         print('Unexpected error!')
+
+        
+# [24.03.2022]: Sorting odds/evens to separate lists and removes duplicates
+def odd_even(iterable):
+    odds, evens = [], []
+    for i in iterable:
+        if i % 2 == 0:
+            evens.append(i)
+        else:
+            odds.append(i)
+    return f'Odds: {list(set(odds))} \nEvens: {list(set(evens))}'
+
+
+# [24.03.2022]: Compares two iterables and presents
+# 1) what it1 has that it2 doesn't / 2) what it2 has that it1 doesn't
+def compare_iterables(it1, it2):
+    return f'{set(it1).difference(it2)}\n' \
+           f'{set(it2).difference(it1)}'
