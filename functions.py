@@ -628,3 +628,97 @@ def odd_even(iterable):
 def compare_iterables(it1, it2):
     return f'{set(it1).difference(it2)}\n' \
            f'{set(it2).difference(it1)}'
+
+
+# [25.03.22]: Takes dictionary of type {x: [a, b, c], y: [d, e, f]} returns rows as
+# x y
+# a d
+# b e
+# c f
+def dictionary_to_table(dictionary):
+    keys = []
+    for key, value in dictionary.items():
+        keys.append(key)
+    for k in dictionary.keys():
+        print(k, end=' ')
+    print()
+    for i in range(len(value)):
+        for j in keys:
+            print(dictionary[j][i], end=' ')
+        print('')
+
+
+# [27.03.22]: Inheritance + class variables + instance variables example
+class User:
+    domain_name = '@union.com'
+    email_address = str()
+
+    def __init__(self, f_name, l_name):
+        self.f_name = f_name
+        self.l_name = l_name
+
+    def assign_email_address(self):
+        self.email_address = f'{self.f_name}.{self.l_name}' \
+                             f'{self.domain_name}'.lower()
+
+
+class Admin(User):
+    admin_name = 'adm'
+    admin_id = 11485596
+
+    def change_email_address(self, target_user):
+        target_user.email_address = \
+            self.admin_name + str(self.admin_id) + target_user.domain_name
+
+
+# [28.03.22]: Splits **kwargs into keys/values lists, returns as a string
+def split_dict_to_lists(**inp_dict):
+    keys, values = [], []
+    for key, value in inp_dict.items():
+        keys.append(key)
+        values.append(value)
+    return f'keys : {keys}\nvalues: {values}'
+
+
+# [28.03.22]: Takes a number returns a binary
+def to_binary(number):
+    return '{:b}'.format(number)
+
+
+# [28.03.22]: Takes rounds/return_lists (0 - not return lists, 1 - return numbers lists)
+#             returns possibility breakdown out of rounds
+def check_possibility(rounds=10, return_lists=0):
+    cz, co, idx, z_list, o_list,  = 0, 0, 0, [], []
+    while idx < rounds:
+        for x in range(rounds):
+            if rnd.randint(0, 1) == 0:
+                cz += 1
+            else:
+                co += 1
+        z_list.append(cz)
+        o_list.append(co)
+        cz, co = 0, 0
+        idx += 1
+    if return_lists == 1:
+        return f'Zeros: {z_list}\n' \
+               f'Ones: {o_list}\n' \
+               f'AvgZeros: {round(sum(z_list)/rounds, 2)}\n' \
+               f'AvgOnes: {round(sum(o_list)/rounds, 2)}'
+    else:
+        return f'AvgZeros: {round(sum(z_list)/rounds, 2)}\n' \
+               f'AvgOnes: {round(sum(o_list)/rounds, 2)}'
+
+
+# [29.03.22]: Takes tries/collection to iterate through collection
+#             and return the % of each value (inside iteration) selection
+def try_get(tries, *collection):
+    choices, counts = [], {}
+    for i in range(tries):
+        # choices.append(collection.index(rnd.choice(collection)))
+        choices.append(rnd.choice(collection))
+    for e in collection:
+        counts[e] = choices.count(e)
+        # counts.append(f'{e}: {choices.count(e)}')
+    for key, value in counts.items():
+        counts[key] = f'{round((value / tries) * 100, 2)}%'
+    return counts
