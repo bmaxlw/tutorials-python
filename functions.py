@@ -391,12 +391,13 @@ class Driver:
         return self
 
 
-# [29.01.2022]: Abstract class
+# [29.01.2022]: Abstract (objects cannot be instantiated from abstract classes)
 class User2(ABC):
     @abstractmethod
-    def get_first_name(self):
+    def get_first_name(self):  # each abstract method is 'empty' and has to be overridden
         pass
 
+    @abstractmethod
     def get_last_name(self):
         pass
 
@@ -405,11 +406,11 @@ class Employee(User2):
     def __init__(self, full_name):
         self.full_name = full_name
 
-    def get_first_name(self):
+    def get_first_name(self):  # overriding of abstract methods
         idx = str(self.full_name).index(' ')
         return self.full_name[0:idx]
 
-    def get_last_name(self):
+    def get_last_name(self):  # overriding of abstract methods
         idx = str(self.full_name).index(' ') + 1
         return self.full_name[idx:]
 
