@@ -722,3 +722,86 @@ def try_get(tries, *collection):
     for key, value in counts.items():
         counts[key] = f'{round((value / tries) * 100, 2)}%'
     return counts
+
+
+# [29.03.22]: Takes different variables and converts them to int if possible
+def check_inputs(*variables):
+    ints = []
+    for i in variables:
+        try:
+            x = int(i)
+        except ValueError:
+            continue
+        except TypeError:
+            continue
+        else:  # if except is False, else is used to append
+            ints.append(x)
+        finally:  # finally is used in any case (if except is True/False)
+            print(f'.', end='.')
+    return f'\n{len(ints)}/{len(variables)} success' \
+           f'\n{len(variables) - len(ints)}/{len(variables)} failure' \
+           f'\n{ints}'
+
+
+# [29.03.22]: Checks whether file(s) exist(s)
+def check_file_exist(path, extension, *names):
+    exists, not_exists = [], []
+    for file in names:
+        if os.path.exists(f'{path}/{file}.{extension}'):
+            exists.append(file)
+        else:
+            not_exists.append(file)
+    return f'(+): {exists}\n(-): {not_exists}'
+
+
+# [29.03.22]: Gets total of floats from a text file
+def get_total_out_of_file(path):
+    with open(path, 'r') as file:
+        raw, clean = file.read().split('\n'), []
+        for i in raw:
+            j = i.split(',')
+            for k in j:
+                try:
+                    clean.append(float(k))
+                except ValueError or TypeError:
+                    continue
+                except:
+                    return False
+    return sum(clean)
+
+
+# [30.03.22]: MS SQL Connection
+def sql_server_connect(database, server='5CD116MK2D',
+                       driver='{ODBC Driver 17 for SQL Server}',
+                       trusted='yes'):
+    cursor = pyodbc.connect(f'DRIVER={driver};'
+                            f'SERVER={server};'
+                            f'DATABASE={database};'
+                            f'Trusted_Connection={trusted};').cursor()
+    return cursor
+
+
+# [30.03.22]: MS SQL Extraction to txt
+def sql_server_extract_data_to_txt(txt_path, source_database, select_statement):
+    extraction = sql_server_connect(source_database).execute(select_statement).fetchall()
+    with open(txt_path, 'a') as file:
+        for i in extraction:
+            file.write(f'{i}\n')
+
+
+# [30.03.22]: OOP patterns
+class Product:
+
+    tax_rate = 1.15  # class variable
+
+    def __init__(self, name, net_price):
+        self.name = name  # instance variable
+        self.net_price = net_price  # instance variable
+        self.gross_price = round(net_price * self.tax_rate, 2)  # derived from instance + class variables
+
+    def change_tax_rate(self, new_tax_rate):
+        self.tax_rate = new_tax_rate  # changes the class variable
+        self.gross_price = round(self.net_price * self.tax_rate, 2)  # changes var-s derived from class var
+
+    def show_all(self):
+        return self.name, self.net_price, self.gross_price
