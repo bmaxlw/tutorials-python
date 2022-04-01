@@ -429,8 +429,8 @@ lambda_2 = lambda x, y: True if x == y else False
 lambda_3 = lambda x, y: True if x is y else False
 
 
-# [03.02.2022]: Higher order Functions
-# 1) Takes other function as argument
+# [03.02.2022]: Higher order functions either: 1) accept(s) function(s) as (an) argument(s)
+#                                          or: 2) return(s) function(s)
 class Employee:
     def __init__(self):
         self.__first_name = str()
@@ -775,10 +775,10 @@ def get_total_out_of_file(path):
 def sql_server_connect(database, server='5CD116MK2D',
                        driver='{ODBC Driver 17 for SQL Server}',
                        trusted='yes'):
-    cursor = pyodbc.connect(f'DRIVER={driver};'
-                            f'SERVER={server};'
-                            f'DATABASE={database};'
-                            f'Trusted_Connection={trusted};').cursor()
+    cursor = db.connect(f'DRIVER={driver};'
+                        f'SERVER={server};'
+                        f'DATABASE={database};'
+                        f'Trusted_Connection={trusted};').cursor()
     return cursor
 
 
@@ -806,3 +806,26 @@ class Product:
 
     def show_all(self):
         return self.name, self.net_price, self.gross_price
+
+
+# [01.03.22]: Sorting using keys (lambdas) for [(a, b, c)] iterable types
+def sort_iterable_by_key(iterable, index, reverse_status=False):
+    key = lambda iterable: iterable[index]
+    # iterable.sort(key=key, reverse=reverse_status) => for list type iterables
+    sorted_iterable = sorted(iterable, key=key, reverse=reverse_status)  # for all iterables
+    for i in sorted_iterable:
+        print(i)
+
+
+# [01.03.22]: Get either net/gross price from iterable prices with map func
+def get_chosen_price(prices, x='g'):
+    get_gross_price = lambda prices: round(prices * 1.15, 2)
+    get_net_price = lambda prices: round(prices / 1.15, 2)
+    if x == 'g':
+        gross_price = tuple(map(get_gross_price, prices))
+        return gross_price
+    elif x == 'n':
+        net_price = tuple(map(get_net_price, prices))
+        return net_price
+    else:
+        return None
