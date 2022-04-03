@@ -1,5 +1,5 @@
 import math
-import random
+import random as rnd
 import os
 from datetime import datetime as dt
 import pyodbc as db
@@ -551,6 +551,10 @@ def get_factorial(number):
 
 
 # [05.02.2022]: <list comprehension>
+#                       Patterns:
+#                       list = [expression for item in iterable] => [i for i in iterable] or ['sth' for i in iterable]
+#                       list = [expression for item in iterable if conditional] => [i for i in iterable if ...]
+#                       list = [expression if/else for item in iterable] => ['sth' if ... else ... for i in iterable]
 # Takes <iterable> and <condition> as upper limit of True being fired
 # makes a list comprehension to those below <condition> as False
 # counts the ratio btn pos (True) and neg (False) in percentages
@@ -808,7 +812,7 @@ class Product:
         return self.name, self.net_price, self.gross_price
 
 
-# [01.03.22]: Sorting using keys (lambdas) for [(a, b, c)] iterable types
+# [01.04.22]: Sorting using keys (lambdas) for [(a, b, c)] iterable types
 def sort_iterable_by_key(iterable, index, reverse_status=False):
     key = lambda iterable: iterable[index]
     # iterable.sort(key=key, reverse=reverse_status) => for list type iterables
@@ -817,8 +821,8 @@ def sort_iterable_by_key(iterable, index, reverse_status=False):
         print(i)
 
 
-# [01.03.22]: Get either net/gross price from iterable prices with map func
-def get_chosen_price(prices, x='g'):
+# [01.04.22]: Get either net/gross price from iterable prices with map func
+def get_updated_prices1(prices, x='g'):
     get_gross_price = lambda prices: round(prices * 1.15, 2)
     get_net_price = lambda prices: round(prices / 1.15, 2)
     if x == 'g':
@@ -829,3 +833,65 @@ def get_chosen_price(prices, x='g'):
         return net_price
     else:
         return None
+
+
+# [02.04.22]: Takes *args of strings, returns their lengths as list
+def get_lengths_of_strings(*input_strings):
+    lengths = [len(i) for i in input_strings if type(i) == str]
+    return lengths
+
+
+# [02.04.22]: Takes *args of integers/floats, returns the dynamics of differences
+#             (e.g.: takes [1, 2, 4] and returns [1, 2] since 2 - 1 = 4 / 4 - 2 = 2
+#                or: takes [3, 2, 1] and returns [-1, -1]).
+#             On the basis of that dynamics returns the ratio of pos/neg/neu dynamics
+#             as well as a percentage ratio of it.
+def display_dynamics(input_iterable):  # or *input_iterable
+    try:
+        start, return_list, percentage_list = 0, [], []
+        for item in input_iterable:
+            return_list.append(round(item - start, 2))
+            percentage_list.append(round((item - start) / item, 2) * 100)
+            start = item
+        pos = list(filter(lambda pos_values: pos_values > 0, return_list))
+        neu = list(filter(lambda neu_values: neu_values == 0, return_list))
+        neg = list(filter(lambda neg_values: neg_values < 0, return_list))
+        return f'Dynamics: {return_list[1:]}\n' \
+               f'Percents: {percentage_list[1:]}\n' \
+               f'Pos: {round((len(pos) - 1) / (len(input_iterable) - 1), 3)}\n' \
+               f'Neg: {round(len(neg) / (len(input_iterable) - 1), 3)}\n' \
+               f'Neu: {round(len(neu) / (len(input_iterable) - 1), 3)}'
+    except TypeError:
+        return 'Only integers/floats are allowed as input!'
+
+
+# [02.04.22]: Takes rate and products as kwargs, returns incremented values
+#             using dictionary comprehension
+def increment_by_rate(rate=1.15, **products):
+    taxed = {key: value * rate for (key, value) in products.items()}
+    return taxed
+
+
+# [02.04.22]: List comprehension patterns
+# list_comp_lambda = lambda inp_iter:
+# lc_list = [1, 2, 3, 4, -1, -2, -3, -4]  # test input list
+# b1 = [i for i in lc_list]  # 1st variant
+# print(b1)
+# b2 = ['odd' if i % 2 != 0 else 'even' for i in lc_list]  # 2nd variant
+# print(b2)
+# b3 = [i for i in lc_list if i == abs(i)]  # 3rd variant
+# print(b3)
+# get_incremented1 = lambda c_iter, x: (c_iter[0] + x, c_iter[1] + x, c_iter[2] + x)
+# complex_prices = [(10, 20, 30), (40, 50, 60), (70, 80, 90)]
+# b4 = [get_incremented1(i, 100) for i in complex_prices]  # not only lambda but usual function might be used
+# print(b4)
+# b5 = [abs(i) for i in lc_list]
+# print(abs_list)
+
+
+# [02.04.22]: Dictionary comprehension patterns
+# output = {key: value for key, value in products.items()}  # full dict comprehension without conditions
+# output = {key: value for key, value in products.items() if value > 10}  # dict comprehension with if statement
+# output = {key: 'more 5' if value > 5 else 'less 5' for key, value in products.items()}  # if/else statement for value
+# output = {'x' if key.startswith('C') else 'y': value for key, value in products.items()} # if/else statement for key
+# output = {key: check_price(value) for key, value in products.items()}  #function used as value in dict comp.
