@@ -895,3 +895,27 @@ def increment_by_rate(rate=1.15, **products):
 # output = {key: 'more 5' if value > 5 else 'less 5' for key, value in products.items()}  # if/else statement for value
 # output = {'x' if key.startswith('C') else 'y': value for key, value in products.items()} # if/else statement for key
 # output = {key: check_price(value) for key, value in products.items()}  #function used as value in dict comp.
+
+
+# [02.04.22]: Basic lambdas
+# get_email = lambda first_name, last_name: f'{first_name}.{last_name}@intermedia.com'.lower()
+# check_login_password = lambda login, password: True if len(login) >= 5 and len(password) >= 10 else False
+# get_sum = lambda *numbers: sum(numbers)
+# get_sum_json = lambda total=0, **_json_: (for key, value in _json_ if value != 0: 'x')
+# get_gross_price = lambda prices: round(prices * 1.15, 2)
+# get_net_price = lambda prices: round(prices / 1.15, 2)
+# get_gross_price2 = lambda iterable: (iterable[0], round(iterable[1] * 1.15, 2))
+# if_js_in_position = lambda itr: 'JS' in itr[1] or 'js' in itr[1]
+
+
+# [03.04.22]: Zip function sample. Takes three iterables, returns zipped
+#             e.g.: ['Max', 'Jack'], [10, 20], ['A', 'B'] => ('Max', 10, 'A'), ('Jack', 20, 'B')
+def get_zipped(a, b, c):
+    return tuple(zip(a, b, c))  # zip takes as many args as needed
+
+
+# [03.04.22]: if __name__ == '__main__'
+# if code is imported and run from another module it was created in then __name__ == name of the module
+# if code is run with the module it is created in (not imported) then __name__ == __main__
+
+
