@@ -1,10 +1,17 @@
-import functions as f
-import functools as ft
-import random as rnd
 import time
 import threading as th
-from abc import ABC, abstractmethod
 import datetime as dt
+
+# thread =  a flow of execution. Like a separate order of instructions.
+#                  However each thread takes a turn running to achieve concurrency
+#                  GIL = (global interpreter lock),
+#                  allows only one thread to hold the control of the Python interpreter at any one time
+
+# cpu bound = program/task spends most of it's time waiting for internal events (CPU intensive)
+#             use multiprocessing
+
+# io bound = program/task spends most of it's time waiting for external events (user input, web scraping)
+#            use multithreading
 
 print('Main thread started:', x := dt.datetime.now())  # <= main thread
 
@@ -54,6 +61,12 @@ print(f'Enumeration #6: {th.enumerate()}')  # <= only main thread enumerated
 print(f'Active count #6: {th.active_count()}')  # <= active count == 1 since all additional threads are already killed
 
 
-
+# daemon thread = a thread that runs in the background, not important for program to run
+#                 your program will not wait for daemon threads to complete before exiting
+#                 non-daemon threads cannot normally be killed, stay alive until task is complete
+#
+#                 ex. background tasks, garbage collection, waiting for input, long running processes
+# In other words, daemon thread is killed as soon as all non-daemon threads are finished.
+# x = th.Thread(target=function, daemon = True)
 
 
