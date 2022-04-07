@@ -28,7 +28,7 @@ class Application:
                   label_fg='black',                  # label foreground (a text color) default=black
                   label_bg='white',                  # label background (a background color) default=white
                   padding_x=0,
-                  padding_y=0,
+                  padding_y=0
                   ):
         label = Label(master=window,
                       text=label_text,
@@ -78,19 +78,28 @@ class Application:
             f"VALUES('{first_name.get()}', '{last_name.get()}', "
             f"       '{email_address.get()}', '{phone_number.get()}');"
         ).commit()
-
+        first_name.delete(0, END)
+        last_name.delete(0, END)
+        email_address.delete(0, END)
+        phone_number.delete(0, END)
 
 
 app = Application()
-main_window = app.set_window(window_logo='logo.png', window_title='Customer v1.0 Alpha', window_width_height='300x360')
-app.set_label(main_window, label_text=f'First Name:', padding_x=100, padding_y=10, label_font=('Arial', 15, 'bold'))
+main_window = app.set_window(window_logo='logo.png', window_title='CMS v1.0 Alpha', window_width_height='300x360',
+                             window_background='whitesmoke')
+app.set_label(main_window, label_text=f'First Name:', padding_x=100, padding_y=10, label_font=('Arial', 15, 'bold'),
+              label_bg='whitesmoke')
 first_name = app.set_entry(main_window, entry_font=('Arial', 15))
-app.set_label(main_window, label_text=f'Last Name:', padding_x=100, padding_y=10, label_font=('Arial', 15, 'bold'))
+app.set_label(main_window, label_text=f'Last Name:', padding_x=100, padding_y=10, label_font=('Arial', 15, 'bold'),
+              label_bg='whitesmoke')
 last_name = app.set_entry(main_window, entry_font=('Arial', 15))
-app.set_label(main_window, label_text=f'Email Address:', padding_x=100, padding_y=10, label_font=('Arial', 15, 'bold'))
+app.set_label(main_window, label_text=f'Email Address:', padding_x=100, padding_y=10, label_font=('Arial', 15, 'bold'),
+              label_bg='whitesmoke')
 email_address = app.set_entry(main_window, entry_font=('Arial', 15))
-app.set_label(main_window, label_text=f'Phone Number:', padding_x=100, padding_y=10, label_font=('Arial', 15, 'bold'))
+app.set_label(main_window, label_text=f'Phone Number:', padding_x=100, padding_y=10, label_font=('Arial', 15, 'bold'),
+              label_bg='whitesmoke')
 phone_number = app.set_entry(main_window, entry_font=('Arial', 15))
 app.set_button(main_window, btn_text='Submit', btn_font=('Arial', 15, 'bold'),
-               btn_command=app.sql_insert_customer_data)
+               btn_command=app.sql_insert_customer_data, btn_background='white',
+               btn_foreground='black', btn_active_bg='green', btn_active_fg='white')
 main_window.mainloop()
