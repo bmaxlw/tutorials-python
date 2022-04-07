@@ -1,5 +1,6 @@
 from tkinter import *
 import functions as f
+import functools as ft
 
 # widgets => GUI elements: buttons, textboxes, labels, images
 # windows => containers to contain widgets
@@ -50,7 +51,8 @@ class Application:
                    btn_active_fg='white',
                    btn_active_bg='black',
                    padding_x=0,
-                   padding_y=0):
+                   padding_y=0,
+                   btn_side=None):
         button = Button(master=window,
                         text=btn_text,
                         command=btn_command,
@@ -62,7 +64,7 @@ class Application:
                         padx=padding_x,
                         pady=padding_y
                         )
-        button.pack()
+        button.pack(side=btn_side)
 
     def set_entry(self,
                   window,
@@ -72,20 +74,57 @@ class Application:
         entry.pack()
         return entry
 
-    def sql_insert_customer_data(self):
-        f.sql_server_connect('CustomerApp').execute(
-            f"INSERT INTO Customers(FirstName, LastName, EmailAddress, PhoneNumber)"
-            f"VALUES('{first_name.get()}', '{last_name.get()}', "
-            f"       '{email_address.get()}', '{phone_number.get()}');"
+    def sql_ins_Customers(self, f_name, l_name, email, phone, db='CustomerApp'):
+        f.sql_server_connect(db).execute(
+            f"INSERT INTO Customers(FirstName, LastName, "
+            f"                      EmailAddress, PhoneNumber)"
+            f"VALUES('{f_name.get()}', '{l_name.get()}', "
+            f"       '{email.get()}', '{phone.get()}');"
         ).commit()
-        first_name.delete(0, END)
-        last_name.delete(0, END)
-        email_address.delete(0, END)
-        phone_number.delete(0, END)
+        f_name.delete(0, END)  # clear entry field (0, END) == [0:]
+        l_name.delete(0, END)
+        email.delete(0, END)
+        phone.delete(0, END)
+
+    def clear_entries(self, f_name, l_name, email, phone):
+        f_name.delete(0, END)  # clear entry field (0, END) == [0:]
+        l_name.delete(0, END)
+        email.delete(0, END)
+        phone.delete(0, END)
+
+    def sign_in(self, username, user_password, master, db='CustomerApp'):
+        status = f.sql_server_connect(db).execute(
+            f"SELECT ID FROM Users WHERE "
+            f"Username = '{username}' AND Password = '{user_password}';"
+        ).fetchone()
+        if status is not None:
+            master.destroy()
+            return True
+        else:
+            master.destroy()
+            return False
 
 
 app = Application()
-main_window = app.set_window(window_logo='logo.png', window_title='CMS v1.0 Alpha', window_width_height='300x360',
+login_window = app.set_window(window_logo='logo.png', window_title='CMS v1.0 Alpha', window_width_height='300x250',
+                              window_background='whitesmoke')
+app.set_label(login_window, label_text=f'Login:', padding_x=100, padding_y=10, label_font=('Arial', 15, 'bold'),
+              label_bg='whitesmoke')
+login = app.set_entry(login_window, entry_font=('Arial', 15))
+
+app.set_label(login_window, label_text=f'Password:', padding_x=100, padding_y=10, label_font=('Arial', 15, 'bold'),
+              label_bg='whitesmoke')
+password = app.set_entry(login_window, entry_font=('Arial', 15))
+app.set_button(login_window, btn_text='Sign in', btn_font=('Arial', 15, 'bold'),
+               # ft.partial => to call args separately
+               btn_command=ft.partial(app.sign_in, username=login, user_password=password,
+                                      master=login_window),
+               btn_background='white', btn_foreground='black', btn_active_bg='green',
+               btn_active_fg='white')
+login_window.mainloop()
+
+
+main_window = app.set_window(window_logo='logo.png', window_title='CMS v1.0 Alpha', window_width_height='300x390',
                              window_background='whitesmoke')
 app.set_label(main_window, label_text=f'First Name:', padding_x=100, padding_y=10, label_font=('Arial', 15, 'bold'),
               label_bg='whitesmoke')
@@ -100,6 +139,13 @@ app.set_label(main_window, label_text=f'Phone Number:', padding_x=100, padding_y
               label_bg='whitesmoke')
 phone_number = app.set_entry(main_window, entry_font=('Arial', 15))
 app.set_button(main_window, btn_text='Submit', btn_font=('Arial', 15, 'bold'),
-               btn_command=app.sql_insert_customer_data, btn_background='white',
-               btn_foreground='black', btn_active_bg='green', btn_active_fg='white')
+               # ft.partial => to call args separately
+               btn_command=ft.partial(app.sql_ins_Customers, first_name, last_name, email_address, phone_number),
+               btn_background='white', btn_foreground='black', btn_active_bg='green',
+               btn_active_fg='white')
+app.set_button(main_window, btn_text='Clear', btn_font=('Arial', 15, 'bold'),
+               # ft.partial => to call args separately
+               btn_command=ft.partial(app.clear_entries, first_name, last_name, email_address, phone_number),
+               btn_background='white', btn_foreground='black', btn_active_bg='green',
+               btn_active_fg='white')
 main_window.mainloop()

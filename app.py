@@ -6,27 +6,16 @@ import threading as th
 from abc import ABC, abstractmethod
 import datetime as dt
 
+username = 'Admin'
+user_password = '123456'
+db = 'CustomerApp'
 
-def ask():
-    answer = input('> ').lower()
-    if answer == 'yes':
-        print('Correct!')
-    else:
-        print('Wrong!')
+status = f.sql_server_connect(db).execute(
+            f"SELECT ID FROM Users WHERE "
+            f"Username = '{username}' AND Password = '{user_password}';"
+        ).fetchone()
 
-
-def wait():
-    time.sleep(5)
-    print('Your time is over!')
-
-
-
-a = th.Thread(target=ask, daemon=True)
-# b = th.Thread(target=wait)
-
-a.start()
-wait()
-# b.start()
+print(status)
 
 
 
