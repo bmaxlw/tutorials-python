@@ -6,16 +6,25 @@ import threading as th
 from abc import ABC, abstractmethod
 import datetime as dt
 
-username = 'Admin'
-user_password = '123456'
 db = 'CustomerApp'
+username = 'A'
+user_password = '1'
 
+auth = 3
 status = f.sql_server_connect(db).execute(
-            f"SELECT ID FROM Users WHERE "
+            f"SELECT TOP 1 ID FROM Users WHERE "
             f"Username = '{username}' AND Password = '{user_password}';"
-        ).fetchone()
+        ).fetchall()
+try:
+    for i in status:
+        auth = 1
+except TypeError:
+        auth = 0
 
-print(status)
+if auth == 1:
+    print(1)
+else:
+    print('hui')
 
 
 
