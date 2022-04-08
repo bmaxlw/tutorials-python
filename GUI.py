@@ -1,11 +1,8 @@
 from tkinter import *
 import functions as f
-import functools as ft
-
-# widgets => GUI elements: buttons, textboxes, labels, images
-# windows => containers to contain widgets
 
 
+# [06.04.2022]: App Main
 class Application:
     def __init__(self, auth=0):  # authentication status default 0 - not authenticated, 1 - authenticated
         self.auth = auth
@@ -32,8 +29,8 @@ class Application:
                   label_fg='black',                  # label foreground (a text color) default=black
                   label_bg='white',                  # label background (a background color) default=white
                   padding_x=0,
-                  padding_y=0
-                  ):
+                  padding_y=0,
+                  label_side=None):
         label = Label(master=window,
                       text=label_text,
                       font=label_font,
@@ -41,7 +38,7 @@ class Application:
                       bg=label_bg,
                       padx=padding_x,
                       pady=padding_y)
-        label.pack()                             # void
+        label.pack(side=label_side)                           # void
 
     # [07.04.2022]: Creates a tkinter button inside a master window
     def set_button(self,
@@ -72,10 +69,19 @@ class Application:
     # [07.04.2022]: Creates a tkinter entry inside a master window
     def set_entry(self,
                   window,
-                  entry_font=('Arial', 10, 'bold')):
+                  entry_font=('Arial', 10, 'bold'),
+                  entry_bg_color='white',
+                  entry_fg_color='black',
+                  show_sign='',
+                  entry_side=None,
+                  entry_width=None):
         entry = Entry(master=window,
-                      font=entry_font)
-        entry.pack()
+                      font=entry_font,
+                      bg=entry_bg_color,
+                      fg=entry_fg_color,
+                      show=show_sign,
+                      width=entry_width)
+        entry.pack(side=entry_side)
         return entry
 
     # [07.04.2022]: Is used to insert data into Customers table
@@ -110,50 +116,46 @@ class Application:
             self.auth = 0
         master.destroy()
 
+    # [08.04.2022]: (RepExp) Extracts data filtered by conditions from db to .CSV
+    def get_csv_from_db(self,
+                        db,
+                        par_order_id='NULL',
+                        par_customer='NULL',
+                        par_customer_phone='NULL',
+                        par_customer_email='NULL',
+                        par_prod_qt='NULL',
+                        par_prod_qt2='NULL',
+                        par_prod_name='NULL',
+                        par_customer_country='NULL',
+                        par_customer_city='NULL',
+                        par_shipping_address='NULL',
+                        par_order_price='NULL',
+                        par_order_price2='NULL',
+                        par_supplier='NULL'):
+        path = 'sample.csv'
+        crs = f.sql_server_connect(db).execute(
+            f"EXEC sp_Rpt_RunCSV_export"
+            f"@OrderID={par_order_id},"
+            f"@Customer={par_customer},"
+            f"@CustomerPhone={par_customer_phone},"
+            f"@CustomerEmail={par_customer_email},"
+            f"@ProdQT={par_prod_qt},"
+            f"@ProdQT2={par_prod_qt2},"
+            f"@ProdName={par_prod_name},"
+            f"@CustomerCountry={par_customer_country},"
+            f"@CustomerCity={par_customer_city},"
+            f"@ShippingAddress={par_shipping_address},"
+            f"@OrderPrice={par_order_price},"
+            f"@OrderPrice2={par_order_price2},"
+            f"@Supplier={par_supplier};").fetchall()
+        with open(path, 'w') as file:
+            for i in crs:
+                for j in i:
+                    file.write(f'{j}|')
+                file.write('\n')
 
-app = Application()
 
-# [07.04.2022]: Login window
-login_window = app.set_window(window_logo='logo.png', window_title='CMS v1.0 Alpha', window_width_height='300x250',
-                              window_background='whitesmoke')
-app.set_label(login_window, label_text=f'Login:', padding_x=100, padding_y=10, label_font=('Arial', 15, 'bold'),
-              label_bg='whitesmoke')
-login = app.set_entry(login_window, entry_font=('Arial', 15))
+# app = Application()
+# app.get_csv_from_db('MainDB', par_order_id=1)
 
-app.set_label(login_window, label_text=f'Password:', padding_x=100, padding_y=10, label_font=('Arial', 15, 'bold'),
-              label_bg='whitesmoke')
-password = app.set_entry(login_window, entry_font=('Arial', 15))
-app.set_button(login_window, btn_text='Sign in', btn_font=('Arial', 15, 'bold'),
-               # ft.partial => to call args separately
-               btn_command=ft.partial(app.sign_in, username=login, user_password=password, master=login_window),
-               btn_background='white', btn_foreground='black', btn_active_bg='green',
-               btn_active_fg='white')
-login_window.mainloop()
 
-# [07.04.2022]: Main window is accessible only if app.auth == 1
-if app.auth == 1:
-    main_window = app.set_window(window_logo='logo.png', window_title='CMS v1.0 Alpha', window_width_height='300x390',
-                                 window_background='whitesmoke')
-    app.set_label(main_window, label_text=f'First Name:', padding_x=100, padding_y=10, label_font=('Arial', 15, 'bold'),
-                  label_bg='whitesmoke')
-    first_name = app.set_entry(main_window, entry_font=('Arial', 15))
-    app.set_label(main_window, label_text=f'Last Name:', padding_x=100, padding_y=10, label_font=('Arial', 15, 'bold'),
-                  label_bg='whitesmoke')
-    last_name = app.set_entry(main_window, entry_font=('Arial', 15))
-    app.set_label(main_window, label_text=f'Email Address:', padding_x=100, padding_y=10, label_font=('Arial', 15, 'bold'),
-                  label_bg='whitesmoke')
-    email_address = app.set_entry(main_window, entry_font=('Arial', 15))
-    app.set_label(main_window, label_text=f'Phone Number:', padding_x=100, padding_y=10, label_font=('Arial', 15, 'bold'),
-                  label_bg='whitesmoke')
-    phone_number = app.set_entry(main_window, entry_font=('Arial', 15))
-    app.set_button(main_window, btn_text='Submit', btn_font=('Arial', 15, 'bold'),
-                   # ft.partial => to call args separately
-                   btn_command=ft.partial(app.sql_ins_Customers, first_name, last_name, email_address, phone_number),
-                   btn_background='white', btn_foreground='black', btn_active_bg='green',
-                   btn_active_fg='white')
-    app.set_button(main_window, btn_text='Clear', btn_font=('Arial', 15, 'bold'),
-                   # ft.partial => to call args separately
-                   btn_command=ft.partial(app.clear_entries, first_name, last_name, email_address, phone_number),
-                   btn_background='white', btn_foreground='black', btn_active_bg='green',
-                   btn_active_fg='white')
-    main_window.mainloop()
