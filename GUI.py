@@ -133,21 +133,22 @@ class Application:
                         par_order_price2='NULL',
                         par_supplier='NULL'):
         path = 'sample.csv'
+        coalesce = lambda x: x if x == 'NULL' else f'{x}'
         crs = f.sql_server_connect(db).execute(
-            f"EXEC sp_Rpt_RunCSV_export"
-            f"@OrderID={par_order_id},"
-            f"@Customer={par_customer},"
-            f"@CustomerPhone={par_customer_phone},"
-            f"@CustomerEmail={par_customer_email},"
-            f"@ProdQT={par_prod_qt},"
-            f"@ProdQT2={par_prod_qt2},"
-            f"@ProdName={par_prod_name},"
-            f"@CustomerCountry={par_customer_country},"
-            f"@CustomerCity={par_customer_city},"
-            f"@ShippingAddress={par_shipping_address},"
-            f"@OrderPrice={par_order_price},"
-            f"@OrderPrice2={par_order_price2},"
-            f"@Supplier={par_supplier};").fetchall()
+            f"EXEC sp_Rpt_RunCSV_export "
+            f"@OrderID={coalesce(par_order_id)}, "
+            f"@Customer={coalesce(par_customer)}, "
+            f"@CustomerPhone={coalesce(par_customer_phone)}, "
+            f"@CustomerEmail={coalesce(par_customer_email)}, "
+            f"@ProdQT={coalesce(par_prod_qt)}, "
+            f"@ProdQT2={coalesce(par_prod_qt2)}, "
+            f"@ProdName={coalesce(par_prod_name)}, "
+            f"@CustomerCountry={coalesce(par_customer_country)}, "
+            f"@CustomerCity={coalesce(par_customer_city)}, "
+            f"@ShippingAddress={coalesce(par_shipping_address)}, "
+            f"@OrderPrice={coalesce(par_order_price)}, "
+            f"@OrderPrice2={coalesce(par_order_price2)}, "
+            f"@Supplier={coalesce(par_supplier)};").fetchall()
         with open(path, 'w') as file:
             for i in crs:
                 for j in i:
@@ -155,7 +156,10 @@ class Application:
                 file.write('\n')
 
 
-# app = Application()
-# app.get_csv_from_db('MainDB', par_order_id=1)
+app = Application()
+app.get_csv_from_db('MainDB', par_prod_qt='9', par_prod_qt2='100')
+
+
+
 
 
