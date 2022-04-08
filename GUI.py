@@ -155,9 +155,37 @@ class Application:
                     file.write(f'{j}|')
                 file.write('\n')
 
+    # [08.04.2022]: (RepExp) Convert attributes
+    def convert_attributes_RepExp(self, *attributes):
+        converted = []
+        for attr in attributes:
+            if attr == '':
+                attr = 'NULL'
+                converted.append(attr)
+        self.get_csv_from_db(
+            db='MainDB',
+            par_order_id=converted[0],
+            par_customer=converted[1],
+            par_customer_phone=converted[2],
+            par_customer_email=converted[3],
+            par_prod_qt=converted[4],
+            par_prod_qt2=converted[5],
+            par_prod_name=converted[6],
+            par_customer_country=converted[7],
+            par_customer_city=converted[8],
+            par_shipping_address=converted[9],
+            par_order_price=converted[10],
+            par_order_price2=converted[11],
+            par_supplier=converted[12]
+        )
+
 
 app = Application()
 app.get_csv_from_db('MainDB', par_prod_qt='9', par_prod_qt2='100')
+
+# (order_id.get(), customer.get(), customer_phone.get(), customer_email.get(),
+#                       prod_qt_from.get(), prod_qt_to.get(), prod_name.get(), shipping_address.get(),
+#                       order_price_from.get(), order_price_to.get(), supplier.get())
 
 
 
