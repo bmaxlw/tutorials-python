@@ -55,14 +55,15 @@ supplier = app.set_entry(main_window, entry_width=40, entry_font=('Comic Sans', 
 app.set_label(main_window, label_text='Path:', label_font=('Comic Sans', 12))
 path = app.set_entry(main_window, entry_width=40, entry_font=('Comic Sans', 11))  # Path
 
-
 app.set_button(main_window, btn_text='EXPORT', btn_font=('Comic Sans', 12), padding_x=50,
                btn_command=ft.partial(app.convert_attributes_RepExp,
-                                      order_id.get(), customer.get(), customer_phone.get(), customer_email.get(),
-                                      prod_qt_from.get(), prod_qt_to.get(), prod_name.get(), customer_country.get(),
-                                      customer_city.get(), shipping_address.get(), order_price_from.get(),
-                                      order_price_to.get(), supplier.get()))
+                                      order_id, customer, customer_phone, customer_email,
+                                      prod_qt_from, prod_qt_to, prod_name, customer_country,
+                                      customer_city, shipping_address, order_price_from,
+                                      order_price_to, supplier))
 app.set_button(main_window, btn_text='CLEAR', btn_font=('Comic Sans', 12), padding_x=57)
 
 main_window.mainloop()
+
+
 

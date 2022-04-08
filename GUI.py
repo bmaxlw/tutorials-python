@@ -159,9 +159,12 @@ class Application:
     def convert_attributes_RepExp(self, *attributes):
         converted = []
         for attr in attributes:
-            if attr == '':
+            if attr.get() == '':
                 attr = 'NULL'
                 converted.append(attr)
+            else:
+                converted.append(str(attr))
+        print(converted)
         self.get_csv_from_db(
             db='MainDB',
             par_order_id=converted[0],
@@ -180,8 +183,8 @@ class Application:
         )
 
 
-app = Application()
-app.get_csv_from_db('MainDB', par_prod_qt='9', par_prod_qt2='100')
+# app = Application()
+# app.get_csv_from_db('MainDB', par_prod_qt='9', par_prod_qt2='100')
 
 # (order_id.get(), customer.get(), customer_phone.get(), customer_email.get(),
 #                       prod_qt_from.get(), prod_qt_to.get(), prod_name.get(), shipping_address.get(),
