@@ -18,17 +18,17 @@ SELECT *
   FROM vw_Rpt_CSV_export
  WHERE (   OrderID       = @OrderID
       OR   @OrderID IS NULL)
-   AND (   Customer      = @Customer
+   AND (   Customer      LIKE CONCAT('%', @Customer, '%')
       OR   @Customer IS NULL)
-   AND (   CustomerPhone = @CustomerPhone
+   AND (   CustomerPhone LIKE CONCAT('%', @CustomerPhone, '%')
       OR   @CustomerPhone IS NULL)
-   AND (   CustomerEmail = @CustomerEmail
+   AND (   CustomerEmail LIKE CONCAT('%', @CustomerEmail, '%')
       OR   @CustomerEmail IS NULL)
    AND (   (ProdQT       > @ProdQT)
      AND   (ProdQT       < @ProdQT2)
       OR   @ProdQT IS NULL
       OR   @ProdQT2 IS NULL)
-   AND (   ProdName      = @ProdName
+   AND (   ProdName      LIKE CONCAT('%', @ProdName, '%')
       OR   @ProdName IS NULL)
    AND (   CustomerCountry LIKE CONCAT('%', @CustomerCountry, '%')
       OR   @CustomerCountry IS NULL)
@@ -40,12 +40,12 @@ SELECT *
      AND   (OrderPrice   < @OrderPrice2)
       OR   @OrderPrice IS NULL
       OR   @OrderPrice2 IS NULL)
-   AND (   Supplier      = @Supplier
+   AND (   Supplier      LIKE CONCAT('%', @Supplier, '%')
       OR   @Supplier IS NULL);
 
 EXEC sp_Rpt_RunCSV_export;
 
-drop proc sp_Rpt_RunCSV_export
+DROP PROC sp_Rpt_RunCSV_export;
 
 
 
