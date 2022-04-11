@@ -52,7 +52,8 @@ class Application:
                    btn_active_bg='black',
                    padding_x=0,
                    padding_y=0,
-                   btn_side=None):
+                   btn_side=None,
+                   btn_bd=None):
         button = Button(master=window,
                         text=btn_text,
                         command=btn_command,
@@ -62,7 +63,8 @@ class Application:
                         activeforeground=btn_active_fg,
                         activebackground=btn_active_bg,
                         padx=padding_x,
-                        pady=padding_y
+                        pady=padding_y,
+                        bd=btn_bd
                         )
         button.pack(side=btn_side)
 
@@ -74,13 +76,15 @@ class Application:
                   entry_fg_color='black',
                   show_sign='',
                   entry_side=None,
-                  entry_width=None):
+                  entry_width=None,
+                  entry_bd=None):
         entry = Entry(master=window,
                       font=entry_font,
                       bg=entry_bg_color,
                       fg=entry_fg_color,
                       show=show_sign,
-                      width=entry_width)
+                      width=entry_width,
+                      bd=entry_bd)
         entry.pack(side=entry_side)
         return entry
 
@@ -104,6 +108,26 @@ class Application:
         email.delete(0, END)
         phone.delete(0, END)
 
+    # [11.04.2022]: (RepExp) Is used to clear entries
+    def clear_entries_RepExp(self, order_id, customer, customer_phone, customer_email, prod_qt_from,
+                             prod_qt_to, prod_name, customer_country, customer_city,
+                             shipping_address, order_price_from, order_price_to, supplier, path):
+        order_id.delete(0, END)
+        customer.delete(0, END)
+        customer_phone.delete(0, END)
+        customer_email.delete(0, END)
+        prod_qt_from.delete(0, END)
+        prod_qt_to.delete(0, END)
+        prod_name.delete(0, END)
+        customer_country.delete(0, END)
+        customer_city.delete(0, END)
+        shipping_address.delete(0, END)
+        order_price_from.delete(0, END)
+        order_price_to.delete(0, END)
+        supplier.delete(0, END)
+        path.delete(0, END)
+        path.delete(0, END)
+
     # [07.04.2022]: Is used to sign in as user (data taken from Users table)
     def sign_in(self, username, user_password, master, db='CustomerApp'):
         status = f.sql_server_connect(db).execute(
@@ -119,6 +143,7 @@ class Application:
     # [08.04.2022]: (RepExp) Extracts data filtered by conditions from db to .CSV
     def get_csv_from_db(self,
                         db,
+                        path,
                         par_order_id='NULL',
                         par_customer='NULL',
                         par_customer_phone='NULL',
@@ -132,7 +157,6 @@ class Application:
                         par_order_price='NULL',
                         par_order_price2='NULL',
                         par_supplier='NULL'):
-        path = 'sample.csv'
         coalesce = lambda x: x if x == 'NULL' else f'{x}'
         crs = f.sql_server_connect(db).execute(
             f"EXEC sp_Rpt_RunCSV_export "
@@ -163,10 +187,14 @@ class Application:
                 attr = 'NULL'
                 converted.append(attr)
             else:
-                converted.append(str(attr))
-        print(converted)
+                converted.append(str(attr.get()))
+        self.clear_entries_RepExp(attributes[0], attributes[1], attributes[2], attributes[3],
+                                  attributes[4], attributes[5], attributes[6], attributes[7],
+                                  attributes[8], attributes[9], attributes[10], attributes[11],
+                                  attributes[12], attributes[13])
         self.get_csv_from_db(
             db='MainDB',
+            path=converted[13],
             par_order_id=converted[0],
             par_customer=converted[1],
             par_customer_phone=converted[2],
@@ -179,7 +207,7 @@ class Application:
             par_shipping_address=converted[9],
             par_order_price=converted[10],
             par_order_price2=converted[11],
-            par_supplier=converted[12]
+            par_supplier=converted[12],
         )
 
 

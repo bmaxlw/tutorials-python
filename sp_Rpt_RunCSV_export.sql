@@ -43,7 +43,9 @@ SELECT *
    AND (   Supplier      = @Supplier
       OR   @Supplier IS NULL);
 
+EXEC sp_Rpt_RunCSV_export;
 
+drop proc sp_Rpt_RunCSV_export
 
 
 
