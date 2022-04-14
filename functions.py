@@ -5,6 +5,7 @@ from datetime import datetime as dt
 import pyodbc as db
 from abc import ABC, abstractmethod
 import functools as ft
+import smtplib
 
 
 # [22.01.22]: Takes number and power it should
@@ -917,5 +918,26 @@ def get_zipped(a, b, c):
 # [03.04.22]: if __name__ == '__main__'
 # if code is imported and run from another module it was created in then __name__ == name of the module
 # if code is run with the module it is created in (not imported) then __name__ == __main__
+
+
+# [12.04.22]: Sends email
+def send_email(sender, receiver, password, subject, body):
+    server = smtplib.SMTP("smtp.gmail.com", 587)
+    server.starttls()
+    message = f'Subject: {subject}\n{body}'
+    try:
+        server.login(sender, password)
+        print('Successfully logged in...')
+    except:
+        print('Error while signing in...')
+    try:
+        server.sendmail(sender, receiver, message)
+        print('Email has been sent!')
+    except:
+        print('Error while sending an email!')
+
+
+# [13.04.22]: .exe
+# pyinstaller -F -w -i loader_logo.ico main.py
 
 
