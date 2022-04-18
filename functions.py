@@ -6,6 +6,7 @@ import pyodbc as db
 from abc import ABC, abstractmethod
 import functools as ft
 import smtplib
+import numpy as np
 
 
 # [22.01.22]: Takes number and power it should
@@ -939,5 +940,31 @@ def send_email(sender, receiver, password, subject, body):
 
 # [13.04.22]: .exe
 # pyinstaller -F -w -i loader_logo.ico main.py
+
+# [18.04.22]: Numpy
+def run_numpy_training_function():
+    np_array1 = np.array([1, 2, 3, 4, 5])
+    np_array2 = np.array([0.1, 0.2, 0.3, 0.4, 0.5])
+    np_array3 = np.array([10, 20, 30, 40, 50])
+    np_array4 = np.arange(4)
+    py_list1 = [1, 2, 3, 4, 5]
+
+    # Case №1:
+    print('Case №1:')
+    np_array1 += 10  # += updates original object
+    print(np_array1)
+    print(np_array1 + 10)  # + doesn't update original object
+    print()
+
+    # Case №2:
+    print('Case №2:')
+    print(np_array2 + np_array3)
+    np_array2 += np_array3
+    print(np_array2)
+    print()
+
+    # Case №3:
+    print('Case №3:')
+    print(np_array4[[True, True, False, False]])  # select first two but not last two
 
 
