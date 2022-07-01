@@ -968,3 +968,51 @@ def run_numpy_training_function():
     print(np_array4[[True, True, False, False]])  # select first two but not last two
 
 
+# [28.06.22]: all to check if all in iterable are True
+def increment_by_tax(prices: list or tuple):
+    try:
+        if all(prices):
+            incremented_prices = tuple(map(lambda price: price * 1.25, prices))
+            return incremented_prices
+        else:
+            return False
+    except TypeError as te:
+        return te
+
+
+# [28.06.22]: Custom iterator (use for in Iterator instance to iterate)
+class Iterator:
+    def __init__(self, lower_limit: int, upper_limit: int):
+        self.lower_limit = lower_limit
+        self.upper_limit = upper_limit
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if self.upper_limit < self.lower_limit:
+            raise StopIteration
+        else:
+            self.lower_limit += 1
+            return self.lower_limit - 1
+
+
+# [28.06.22]: Custom generator (Generator(1, 10).generate())
+class Generator:
+    def __init__(self, lower_limit: int, upper_limit: int):
+        self.lower_limit = lower_limit
+        self.upper_limit = upper_limit
+
+    def generate(self) -> int:
+        while self.upper_limit >= self.lower_limit:
+            yield self.lower_limit
+            self.lower_limit += 1
+
+
+# [01.07.22]: Itertate through root
+def show_root(root: str, topdown: bool = False):
+    for roots, dirs, files in os.walk(root, topdown=topdown):
+        for dir in dirs:
+            print(f'Dir: {dir}')
+        for file in files:
+            print(f'File: {file}')
